@@ -27,9 +27,9 @@ public class Member {
     @JoinColumn(name="address_id")  //foreign key in Member table
     private Address address;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)    //many to many  create a  @JoinTable
     @JoinTable(
-            name="member_book",  //join table name
+            name="member_book",  //join table name ,,with two columns
             joinColumns = @JoinColumn(name ="member_id"), //foreign key for member
             inverseJoinColumns = @JoinColumn(name="book_id") //foreign key for book
     )
@@ -75,6 +75,14 @@ public class Member {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     @Override

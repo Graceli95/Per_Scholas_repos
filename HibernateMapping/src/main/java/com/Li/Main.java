@@ -8,7 +8,8 @@ public class Main {
 //        LibraryService.retrieveMembers();
 //        LibraryService.insertBooksToLibraries();
 //        LibraryService.accessBooks();
-        LibraryService.updateMemberWithAddress();
+//        LibraryService.updateMemberWithAddress();
+        LibraryService.insertMembersAndBooks();
 
 
     }

@@ -13,6 +13,7 @@ import java.util.List;
 
 public class LibraryService {
 
+//    many to one mapping
     public static void insertLibraryAndMembers(){
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -62,6 +63,7 @@ public class LibraryService {
 
     }
 
+//    use HQL to retrieve data
     public static void retrieveMembers(){
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -72,6 +74,7 @@ public class LibraryService {
 
     }
 
+//    one to many mapping
     public static void insertBooksToLibraries(){
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -139,6 +142,7 @@ public class LibraryService {
 
     }
 
+//    One to one mapping
     public static void updateMemberWithAddress(){
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -178,15 +182,60 @@ public class LibraryService {
     }
 
 
+//    many to many relationship mapping
+    public static void insertMembersAndBooks(){
+
+        // Create SessionFactory
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        // Begin transaction
+        Transaction transaction = session.beginTransaction();
+
+        //Create Books
+        Book book1 = new Book();
+        book1.setTitle("Java Basics");
+
+        Book book2 = new Book();
+        book2.setTitle("Spring in Action");
+
+        Book book3 = new Book();
+        book3.setTitle("Hibernate for Beginners");
+
+        //Create Members
+        Member alice = new Member();
+        alice.setName("Alice");
+        alice.setEmail("alice@gmail.com");
+
+        Member bob = new Member();
+        bob.setName("Bob");
+        bob.setEmail("bob@example.com");
+
+        //Assign books to members
+        alice.getBooks().add(book1);
+        alice.getBooks().add(book2);
+
+        bob.getBooks().add(book3);
+
+
+        //Persist Members (cascading saves books)
+        session.persist(alice);
+        session.persist(bob);
+
+        //commit transaction
+        transaction.commit();
+
+        //Close session and factory
+        session.close();
+        sessionFactory.close();
+
+        System.out.println("Members and books inserted successfully.");
+
+
+
+
+    }
+
+
 }
 
-//// Persist address
-//            session.persist(address);
-//
-//// Associate the address with the member
-//            member.setAddress(address);
-//
-//// Persist the member
-//            session.persist(member);
-//
-//            System.out.println("Updated address for: " + member.getName());
